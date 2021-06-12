@@ -30,6 +30,20 @@ public class TicTacToe {
 			System.out.println("Invalid Input");
 		}
 	}
+	 public void showBoard(){
+		 String horizontalPart = "+---";
+	        String verticalPart = "|   ";
+	        for (int i = 0; i < 3; i++) {
+	            for (int j = 0; j < 3; j++) {
+	                System.out.print(horizontalPart);
+	            }
+	            System.out.print("+\n");
+	            for (int j = 0; j < 3; j++) {
+	                System.out.print(verticalPart);
+	            }
+	            System.out.print("+\n");
+	        }
+	      }
 
 	public static void main(String[] args) {
 		// welcome message
@@ -37,5 +51,7 @@ public class TicTacToe {
 		TicTacToe tictactoe = new TicTacToe();
 		tictactoe.createBoard();// call the method in main class
 		tictactoe.makeChoice();
+		tictactoe.showBoard();
+		
 	}
 }
