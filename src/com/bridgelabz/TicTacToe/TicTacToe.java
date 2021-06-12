@@ -3,7 +3,7 @@ package com.bridgelabz.TicTacToe;
 import java.util.Scanner;
 
 public class TicTacToe {
-	private char[] board = new char[10];
+	private static char[] board = new char[10];
 	char player;
 	char computer = ' ';
 
@@ -15,11 +15,11 @@ public class TicTacToe {
 	}
 
 	// make choice for x or o
-	public void makeChoice() {//user input
+	public void makeChoice() {// user input
 		System.out.println("Enter What You Want X or O");
 		Scanner obj = new Scanner(System.in);
 		player = obj.next().charAt(0);
-      //getting the value from user
+		// getting the value from user
 		if (player == 'X' || player == 'x') {
 			computer = 'O';
 			System.out.println("Computer:" + computer);
@@ -30,20 +30,27 @@ public class TicTacToe {
 			System.out.println("Invalid Input");
 		}
 	}
-	 public void showBoard(){
-		 String horizontalPart = "+---";
-	        String verticalPart = "|   ";
-	        for (int i = 0; i < 3; i++) {
-	            for (int j = 0; j < 3; j++) {
-	                System.out.print(horizontalPart);
-	            }
-	            System.out.print("+\n");
-	            for (int j = 0; j < 3; j++) {
-	                System.out.print(verticalPart);
-	            }
-	            System.out.print("+\n");
-	        }
-	      }
+
+	public void showBoard(char[] board) {
+		System.out.println("\n" + board[1] + "|" + board[2] + "|" + board[3]);
+		System.out.println("------");
+		System.out.println(" " + board[4] + "|" + board[5] + "|" + board[6]);
+		System.out.println("------");
+		System.out.println(" " + board[7] + "|" + board[8] + "|" + board[9]);
+	}
+
+	public void makeMove(char[] board) {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter value");
+		int i = sc.nextInt();
+		if (0 < i && i < 10) {
+			if (board[i] == ' ') {
+				board[i] = player;
+			} else {
+				System.out.println("Already occupied");
+			}
+		}
+	}
 
 	public static void main(String[] args) {
 		// welcome message
@@ -51,7 +58,9 @@ public class TicTacToe {
 		TicTacToe tictactoe = new TicTacToe();
 		tictactoe.createBoard();// call the method in main class
 		tictactoe.makeChoice();
-		tictactoe.showBoard();
-		
+		tictactoe.makeMove(board);
+		tictactoe.showBoard(board);
+	
+
 	}
 }
