@@ -4,7 +4,8 @@ import java.util.Scanner;
 
 public class TicTacToe {
 	private char[] board = new char[10];
-
+	char player;
+	char computer = ' ';
 	public void createBoard() { // created board of size 10
 		for (int i = 1; i < 9; i++) {
 			// assign empty space to each element and start it from position 1
@@ -13,11 +14,11 @@ public class TicTacToe {
 	}
 
 	// make choice for x or o
-	public static void makeChoice() {
-		Scanner obj = new Scanner(System.in);
+	public void makeChoice() {
 		System.out.println("Enter What You Want X or O");
+		Scanner obj = new Scanner(System.in);
 		char player = obj.next().charAt(0);
-		char computer = ' ';
+
 		if (player == 'X' || player == 'x') {
 			computer = 'O';
 			System.out.println("Computer:"+computer);
