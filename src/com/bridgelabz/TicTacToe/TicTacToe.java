@@ -58,62 +58,92 @@ public class TicTacToe {
 		System.out.println(" " + board[4] + "|" + board[5] + "|" + board[6]);
 		System.out.println("------");
 		System.out.println(" " + board[7] + "|" + board[8] + "|" + board[9]);
-	}
-
-	public void makeMove(char[] board) {
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Enter value");
-		int i = sc.nextInt();
-		if (0 < i && i < 10) {
-			if (board[i] == ' ') {
-				board[i] = player;
-			} else {
-				System.out.println("Already occupied");
-			}
+		//check condition if win
+		public boolean allEqual(int a, int b, int c) {
+			return (a == c) && (b == c);
 		}
-	}
-	public boolean allEqual(int a, int b, int c) {
-		return (a == c) && (b == c);
-	}
-
-	public void checkGameStatus(String key) {
-		displayBoard(board);
-		// System.out.println(counter);
-		if (counter <= 9) {
+		//check condition to win
+		public boolean twoEqual(char a,char b) {
+			return (a == b) && a == computerChoice;
+		}
+		//check if computer can make best move in horizontal
+		public int computerBestMoveHorizontal() {
 			for (int i = 1; i < 10; i = i + 3) {
-				if (allEqual(board[i], board[i + 1], board[i + 2]) && board[i] != ' ') {
-					System.out.println(key + " has won the game");
-					return;
+				if (twoEqual(board[i] , board[i + 1]) && board[i + 2] == ' ') {
+					return i + 2;
+				}
+			}
+			for (int i = 1; i < 10; i = i + 3) {
+				if (twoEqual(board[i], board[i + 2]) && board[i + 1] == ' ') {
+					return i + 1;
+				}
+			}
+			for (int i = 1; i < 10; i = i + 3) {
+				if (twoEqual(board[i + 1] , board[i + 2]) && board[i] == ' ') {
+					return i;
+				}
+			}
+			return 0;
+		}
+		//check if computer can make best move in vertical
+		public int computerBestMoveVertical() {
+			for (int i = 1; i < 3; i = i + 1) {
+				if (twoEqual(board[i] , board[i + 3]) && board[i + 6] == ' ') {
+					return i + 6;
 				}
 			}
 			for (int i = 1; i < 3; i = i + 1) {
-				if (allEqual(board[i], board[i + 3], board[i + 6]) && board[i] != ' ') {
+				if (twoEqual(board[i] , board[i + 6]) && board[i + 3] == ' ') {
+					return i + 3;
+				}
+			}
+			for (int i = 1; i < 3; i = i + 1) {
+				if (twoEqual(board[i + 3] , board[i + 6]) && board[i] == ' ') {
+					return i;
+				}
+			}
+			return 0;
+		}
+
+		//check game status whether win tie lose
+		public void checkGameStatus(String key) {
+			displayBoard(board);
+			// System.out.println(counter);
+			if (counter <= 9) {
+				for (int i = 1; i < 10; i = i + 3) {
+					if (allEqual(board[i], board[i + 1], board[i + 2]) && board[i] != ' ') {
+						System.out.println(key + " has won the game");
+						return;
+					}
+				}
+				for (int i = 1; i < 3; i = i + 1) {
+					if (allEqual(board[i], board[i + 3], board[i + 6]) && board[i] != ' ') {
+						System.out.println(key + " has won the game");
+						return;
+					}
+				}
+				if (allEqual(board[1], board[5], board[9]) && board[1] != ' ') {
 					System.out.println(key + " has won the game");
 					return;
 				}
+				if (allEqual(board[3], board[5], board[7]) && board[3] != ' ') {
+					System.out.println(key + " has won the game");
+					return;
+				}
+				if (key.equals("Computer") && counter < 9) makeUserMove();
+				else if (key.equals("User") && counter < 9) makeComputerMove();
+				else System.out.println("it's a tie");
 			}
-			if (allEqual(board[1], board[5], board[9]) && board[1] != ' ') {
-				System.out.println(key + " has won the game");
-				return;
-			}
-			if (allEqual(board[3], board[5], board[7]) && board[3] != ' ') {
-				System.out.println(key + " has won the game");
-				return;
-			}
-			if (key.equals("Computer") && counter <9) makeUserMove();
-			else if (key.equals("User") && counter <9) makeComputerMove();
-			else System.out.println("it's a tie");
+		}
+
+		public static void main(String[] args) {
+			int gamestatus = 0;
+			TicTacToe game = new TicTacToe();
+			System.out.println("welcome to TikTakToe");
+			char[] board = game.createBoard();
+			game.makeChoice();
+			if (tossToBegin()) game.makeComputerMove();
+			else game.makeUserMove();
 		}
 	}
-
-	public static void main(String[] args) {
-		int gamestatus = 0;
-		TicTacToe game = new TicTacToe();
-		System.out.println("welcome to TikTakToe");
-		char[] board = game.createBoard();
-		game.makeChoice();
-		if (tossToBegin()) game.makeComputerMove();
-		else game.makeUserMove();
-	}
-}}
 }
